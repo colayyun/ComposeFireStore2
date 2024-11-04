@@ -1,4 +1,4 @@
-package tw.edu.pu.s1110054.composefirestore
+package tw.edu.pu.s1110054.composefirestore2
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import tw.edu.pu.s1110054.composefirestore.ui.theme.ComposeFireStoreTheme
+import tw.edu.pu.s1110054.composefirestore2.ui.theme.ComposeFireStore2Theme
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +27,9 @@ import androidx.compose.material3.Button
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.ui.text.input.KeyboardType
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
+import tw.edu.pu.s1110054.composefirestore2.ui.theme.ComposeFireStore2Theme
 
 
 class MainActivity : ComponentActivity() {
@@ -34,22 +37,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ComposeFireStoreTheme {
+            ComposeFireStore2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     /*
                     Greeting(
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-
                      */
                     Birth(m = Modifier.padding(innerPadding))
-
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun Birth(m: Modifier) {
@@ -58,6 +60,7 @@ fun Birth(m: Modifier) {
     var userWeight by remember { mutableStateOf(3820)}
     var userPassword by remember { mutableStateOf("")}
     var msg by remember { mutableStateOf("訊息")}
+    val db = Firebase.firestore
 
     Column {
         TextField(
@@ -104,8 +107,24 @@ fun Birth(m: Modifier) {
                 + "\n密碼：$userPassword")
 
         Row {
-            Button(onClick = {  }) {
+            Button(onClick = {
+                val user = Person(userName, userWeight, userPassword)
+                db.collection("users")
+                    //.add(user)
+                    .document(userName)
+                    .set(user)
+
+                    .addOnSuccessListener { documentReference ->
+                        msg = "新增/異動資料成功"
+                    }
+                    .addOnFailureListener { e ->
+                        msg = "新增/異動資料失敗：" + e.toString()
+                    }
+
+
+            }) {
                 Text("新增/修改資料")
+
             }
             Button(onClick = {  }) {
                 Text("查詢資料")
@@ -119,3 +138,9 @@ fun Birth(m: Modifier) {
 
     }
 }
+
+data class Person(
+    var userName: String,
+    var userWeight: Int,
+    var userPassword: String
+)

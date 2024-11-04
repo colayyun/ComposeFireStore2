@@ -90,6 +90,7 @@ fun Birth(m: Modifier) {
             onValueChange = { newText ->
                 userPassword = newText
             },
+
             label = { Text("密碼") },
             placeholder = { Text(text = "請輸入您的密碼") },
             visualTransformation = PasswordVisualTransformation(),

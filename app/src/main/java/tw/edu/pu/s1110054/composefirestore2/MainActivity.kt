@@ -109,6 +109,7 @@ fun Birth(m: Modifier) {
                 + "\n密碼：$userPassword")
 
         Row {
+
             Button(onClick = {
 
                 val user = Person(userName, userWeight, userPassword)

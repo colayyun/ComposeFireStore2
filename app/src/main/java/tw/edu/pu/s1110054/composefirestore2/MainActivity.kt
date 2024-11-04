@@ -64,6 +64,7 @@ fun Birth(m: Modifier) {
     val db = Firebase.firestore
 
     Column {
+
         TextField(
             value = userName,
             onValueChange = { newText ->

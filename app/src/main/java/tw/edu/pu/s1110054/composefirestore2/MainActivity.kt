@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.ui.text.input.KeyboardType
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import tw.edu.pu.s1110054.composefirestore2.ui.theme.ComposeFireStore2Theme
 
@@ -130,7 +131,10 @@ fun Birth(m: Modifier) {
             Button(onClick = {
                 db.collection("users")
                     //.whereEqualTo("userName", userName)
-                    .whereLessThan("userWeight", userWeight)
+                    //.whereLessThan("userWeight", userWeight)
+                    .orderBy("userWeight", Query.Direction.DESCENDING)
+                    .limit(2)
+
 
                     .get()
                     .addOnCompleteListener { task ->

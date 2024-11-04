@@ -57,7 +57,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Birth(m: Modifier) {
-
     var userName by remember { mutableStateOf("洪可芸")}
     var userWeight by remember { mutableStateOf(3820)}
     var userPassword by remember { mutableStateOf("")}

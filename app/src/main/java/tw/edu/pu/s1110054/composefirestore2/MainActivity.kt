@@ -113,6 +113,7 @@ fun Birth(m: Modifier) {
                 Text("刪除資料")
             }
         }
+
         Text(text = msg)
 
     }

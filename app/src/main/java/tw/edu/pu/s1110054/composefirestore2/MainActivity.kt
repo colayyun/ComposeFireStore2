@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
                     )
                      */
                     Birth(m = Modifier.padding(innerPadding))
+
                 }
             }
         }

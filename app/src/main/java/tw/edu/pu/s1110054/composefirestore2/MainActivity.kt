@@ -127,6 +127,7 @@ fun Birth(m: Modifier) {
 
 
             }) {
+
                 Text("新增/修改資料")
 
             }
